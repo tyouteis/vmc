@@ -240,6 +240,7 @@ module VMC::Cli::ManifestHelper
   end
 
   def create_services(services)
+p "#{__FILE__}:#{__LINE__}-----debug-----create_services"
     svcs = services.collect(&:to_s).sort!
 
     configure_service(
@@ -248,7 +249,7 @@ module VMC::Cli::ManifestHelper
         :indexed => true,
         :choices => svcs
       )
-    )
+    ) 
 
     if ask "Create another?", :default => false
       create_services(services)
@@ -256,10 +257,41 @@ module VMC::Cli::ManifestHelper
   end
 
   def configure_service(vendor)
+p "#{__FILE__}:#{__LINE__}-----debug-----configure_service"
     default_name = random_service_name(vendor)
     name = ask "Specify the name of the service", :default => default_name
-
+    configure_plan(vendor, name)
     set vendor, "services", name, "type"
+  end
+
+  def configure_plan(service, name)
+p "#{__FILE__}:#{__LINE__}-----debug-----configure_plan"
+    services = client.services_info
+    plans = services.values.collect { |type|
+      type.select {|vendor, version| vendor.to_s == service}.values.collect { |ver|
+        ver.values.collect { |srv|
+          srv.select { |key, value| key == :tiers}.values.collect{ |plan|
+            plan.keys.collect(&:to_s)
+          }
+        }
+      }
+    }.flatten
+   
+    plans = [] || plans
+   
+    case plans.size
+    when 0
+      plan = nil
+    when 1
+      plan = plans[0]
+    else 
+      plan = ask(
+        "Which plan?",
+        :indexed => true,
+        :choices => plans
+      )
+    end
+    set(plan, "services", name, "plan") if plan
   end
 
   private

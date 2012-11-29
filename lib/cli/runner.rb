@@ -23,6 +23,7 @@ class VMC::Cli::Runner
   # Collect all the available options for all commands
   # Some duplicates exists to capture all scenarios
   def parse_options!
+p "#{__FILE__}:#{__LINE__}-----debug-----parse_options!"
     opts_parser = OptionParser.new do |opts|
       opts.banner = "\nAvailable options:\n\n"
 
@@ -34,6 +35,7 @@ class VMC::Cli::Runner
       opts.on('--token-file TOKEN_FILE')     { |token_file|  @options[:token_file] = token_file }
       opts.on('--app NAME')        { |name|  @options[:name] = name }
       opts.on('--name NAME')       { |name|  @options[:name] = name }
+      opts.on('--plan NAME')       { |name|  @options[:plan] = name }
       opts.on('--bind BIND')       { |bind|  @options[:bind] = bind }
       opts.on('--instance INST')   { |inst|  @options[:instance] = inst }
       opts.on('--instances INST')  { |inst|  @options[:instances] = inst }
@@ -145,6 +147,7 @@ class VMC::Cli::Runner
   end
 
   def parse_command!
+p "#{__FILE__}:#{__LINE__}-----debug-----parse_command!"
     # just return if already set, happends with -v, -h
     return if @namespace && @action
 
@@ -333,11 +336,12 @@ class VMC::Cli::Runner
       set_cmd(:apps, :environment_del, 2)
 
     when 'create-service', 'create_service'
-      usage('vmc create-service [service] [servicename] [appname] [--name servicename] [--bind appname]')
+      usage('vmc create-service [service] [servicename] [plan] [appname] [--name servicename] [--bind appname] [--plan plan]')
       set_cmd(:services, :create_service) if @args.size == 0
       set_cmd(:services, :create_service, 1) if @args.size == 1
       set_cmd(:services, :create_service, 2) if @args.size == 2
       set_cmd(:services, :create_service, 3) if @args.size == 3
+      set_cmd(:services, :create_service, 4) if @args.size == 4
 
     when 'delete-service', 'delete_service'
       usage('vmc delete-service <service>')

@@ -894,6 +894,7 @@ module VMC::Cli::Command
     end
 
     def do_push(appname=nil)
+p "#{__FILE__}:#{__LINE__}-----debug-----do_push"
       unless @app_info || no_prompt
         @manifest = { "applications" => { @path => { "name" => appname } } }
 
@@ -1025,8 +1026,9 @@ module VMC::Cli::Command
 
       if @app_info && services = @app_info["services"]
         services.each do |name, info|
+p "#{__FILE__}:#{__LINE__}-----debug-----#{name},#{info}"
           unless existing.include? name
-            create_service_banner(info["type"], name, true)
+            create_service_banner(info["type"], name, true, info["plan"])
           end
 
           bind_service_banner(name, appname)
