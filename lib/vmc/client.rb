@@ -168,7 +168,6 @@ class VMC::Client
   end
 
   def create_service(service, name, plan=nil)
-p "#{__FILE__}:#{__LINE__}-----debug-----create_service"
     check_login_status
     services = services_info
     services ||= []

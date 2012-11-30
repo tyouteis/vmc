@@ -23,7 +23,6 @@ class VMC::Cli::Runner
   # Collect all the available options for all commands
   # Some duplicates exists to capture all scenarios
   def parse_options!
-p "#{__FILE__}:#{__LINE__}-----debug-----parse_options!"
     opts_parser = OptionParser.new do |opts|
       opts.banner = "\nAvailable options:\n\n"
 
@@ -147,7 +146,6 @@ p "#{__FILE__}:#{__LINE__}-----debug-----parse_options!"
   end
 
   def parse_command!
-p "#{__FILE__}:#{__LINE__}-----debug-----parse_command!"
     # just return if already set, happends with -v, -h
     return if @namespace && @action
 

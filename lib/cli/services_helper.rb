@@ -2,7 +2,6 @@
 module VMC::Cli
   module ServicesHelper
     def display_system_services(services=nil)
-p "#{__FILE__}:#{__LINE__}-----debug-----display_system_services"
       services ||= client.services_info
 
       display "\n============== System Services ==============\n\n"
@@ -31,14 +30,12 @@ p "#{__FILE__}:#{__LINE__}-----debug-----display_system_services"
     end
 
     def display_provisioned_services(services=nil)
-p "#{__FILE__}:#{__LINE__}-----debug-----display_provisioned_services"
       services ||= client.services
       display "\n=========== Provisioned Services ============\n\n"
       display_provisioned_services_table(services)
     end
 
     def display_provisioned_services_table(services)
-p "#{__FILE__}:#{__LINE__}-----debug-----display_provisioned_services_table"
       return unless services && !services.empty?
       services_table = table do |t|
         t.headings = 'Name', 'Service', 'Plan'
@@ -50,7 +47,6 @@ p "#{__FILE__}:#{__LINE__}-----debug-----display_provisioned_services_table"
     end
 
     def create_service_banner(service, name, display_name=false, plan=nil)
-p "#{__FILE__}:#{__LINE__}-----debug-----create_service_banner"
       sn = " [#{name}]" if display_name
       display "Creating Service#{sn}: ", false
       client.create_service(service, name, plan)

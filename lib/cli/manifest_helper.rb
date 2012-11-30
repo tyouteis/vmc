@@ -240,7 +240,6 @@ module VMC::Cli::ManifestHelper
   end
 
   def create_services(services)
-p "#{__FILE__}:#{__LINE__}-----debug-----create_services"
     svcs = services.collect(&:to_s).sort!
 
     configure_service(
@@ -257,7 +256,6 @@ p "#{__FILE__}:#{__LINE__}-----debug-----create_services"
   end
 
   def configure_service(vendor)
-p "#{__FILE__}:#{__LINE__}-----debug-----configure_service"
     default_name = random_service_name(vendor)
     name = ask "Specify the name of the service", :default => default_name
     configure_plan(vendor, name)
@@ -265,7 +263,6 @@ p "#{__FILE__}:#{__LINE__}-----debug-----configure_service"
   end
 
   def configure_plan(service, name)
-p "#{__FILE__}:#{__LINE__}-----debug-----configure_plan"
     services = client.services_info
     plans = services.values.collect { |type|
       type.select {|vendor, version| vendor.to_s == service}.values.collect { |ver|

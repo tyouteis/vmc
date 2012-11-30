@@ -20,7 +20,6 @@ module VMC::Cli::Command
     end
 
     def create_service(service=nil, name=nil, appname=nil, plan=nil)
-p "#{__FILE__}:#{__LINE__}-----debug-----create_service"
       unless no_prompt || service
         services = client.services_info
         err 'No services available to provision' if services.empty?
@@ -62,7 +61,6 @@ p "#{__FILE__}:#{__LINE__}-----debug-----create_service"
     end
     
     def service_plans(service, services_info=nil)
-p "#{__FILE__}:#{__LINE__}-----debug-----service_plans"
       services_info ||= client.services_info 
       services.values.collect { |type|
         type.select {|vendor, version| vendor.to_s == service}.values.collect { |ver|
