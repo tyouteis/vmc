@@ -14,7 +14,7 @@ module VMC::Cli
           version.each do |version_str, service|
             default_plan = service[:default_plan]? service[:default_plan]: ""
             plans_str = ""
-            plans_str = service[:tiers].keys.join(',') if service[:tiers] 
+            plans_str = service[:tiers].keys.join(',') if service[:tiers]
             plans_str.sub!(/#{default_plan}/, "#{default_plan}(default)") unless default_plan.empty?
             displayed_services << [ vendor, version_str, service[:description], plans_str ]
           end

@@ -248,7 +248,7 @@ module VMC::Cli::ManifestHelper
         :indexed => true,
         :choices => svcs
       )
-    ) 
+    )
 
     if ask "Create another?", :default => false
       create_services(services)
@@ -273,15 +273,15 @@ module VMC::Cli::ManifestHelper
         }
       }
     }.flatten
-   
+
     plans = [] || plans
-   
+
     case plans.size
     when 0
       plan = nil
     when 1
       plan = plans[0]
-    else 
+    else
       plan = ask(
         "Which plan?",
         :indexed => true,

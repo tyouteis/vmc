@@ -174,7 +174,7 @@ class VMC::Client
     service_hash = nil
 
     service = service.to_s
-    service_plans = nil
+    service_plans = []
     default_plan = nil
 
     # FIXME!
@@ -182,7 +182,6 @@ class VMC::Client
       value.each do |vendor, version|
         version.each do |version_str, service_descr|
           if service == service_descr[:vendor]
-            service_plans = []
             service_plans = service_descr[:tiers].keys.map!{|plan_name| plan_name.to_s} if service_descr[:tiers]
             default_plan = service_descr[:default_plan]
             service_hash = {
@@ -196,9 +195,9 @@ class VMC::Client
     end
 
     raise TargetError, "Service [#{service}] is not a valid service choice" unless service_hash
-    plan = 'free' || default_plan if plan == nil or plan.empty?
+    plan = default_plan || 'free' if plan == nil || plan.empty?
     service_hash[:tier] = plan
-    raise TargetError, "Plan [#{plan}] is not a valid plan choice" if service_plans.size > 0 and (not service_plans.include? plan) 
+    raise TargetError, "Plan [#{plan}] is not a valid plan choice" if service_plans.size > 0 && (not service_plans.include? plan)
 
     service_hash[:name] = name
     json_post(path(VMC::SERVICES_PATH), service_hash)

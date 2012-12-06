@@ -33,7 +33,7 @@ module VMC::Cli::Command
           }
         )
         
-        plans = service_plans(service, services)      
+        plans = service_plans(service, services)
         if plans.size > 1
           plan = ask(
             "Which plan would you like to select?",
