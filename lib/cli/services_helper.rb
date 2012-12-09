@@ -84,5 +84,18 @@ module VMC::Cli
       cmd.restart(appname) if app[:state] == 'STARTED'
     end
 
+    def service_plans(service, services_info=nil)
+      services ||= client.services_info
+      services.values.collect { |type|
+        type.select {|vendor, version| vendor.to_s == service}.values.collect { |ver|
+          ver.values.collect { |srv|
+            srv.select { |key, value| key == :tiers}.values.collect{ |plan|
+              plan.keys.collect(&:to_s)
+            }
+          }
+        }
+      }.flatten
+    end
+
   end
 end

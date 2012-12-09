@@ -263,18 +263,8 @@ module VMC::Cli::ManifestHelper
   end
 
   def configure_plan(service, name)
-    services = client.services_info
-    plans = services.values.collect { |type|
-      type.select {|vendor, version| vendor.to_s == service}.values.collect { |ver|
-        ver.values.collect { |srv|
-          srv.select { |key, value| key == :tiers}.values.collect{ |plan|
-            plan.keys.collect(&:to_s)
-          }
-        }
-      }
-    }.flatten
-
-    plans = [] || plans
+    plans = service_plan(service)
+    plans = plans || []
 
     case plans.size
     when 0
