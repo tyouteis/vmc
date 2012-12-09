@@ -263,7 +263,7 @@ module VMC::Cli::ManifestHelper
   end
 
   def configure_plan(service, name)
-    plans = service_plan(service)
+    plans = service_plans(service)
     plans = plans || []
 
     case plans.size
