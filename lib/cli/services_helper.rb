@@ -16,14 +16,14 @@ module VMC::Cli
             plans_str = ""
             plans_str = service[:tiers].keys.join(',') if service[:tiers]
             plans_str.sub!(/#{default_plan}/, "#{default_plan}(default)") unless default_plan.empty?
-            displayed_services << [ vendor, version_str, service[:description], plans_str ]
+            displayed_services << [ vendor, version_str, plans_str, service[:description] ]
           end
         end
       end
       displayed_services.sort! { |a, b| a.first.to_s <=> b.first.to_s}
 
       services_table = table do |t|
-        t.headings = 'Service', 'Version', 'Description', 'Plans'
+        t.headings = 'Service', 'Version', 'Plans', 'Description'
         displayed_services.each { |s| t << s }
       end
       display services_table

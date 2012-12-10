@@ -32,14 +32,14 @@ module VMC::Cli::Command
               }.flatten
           }
         )
-        
+
         plans = service_plans(service, services)
         if plans.size > 1
           plan = ask(
             "Which plan would you like to select?",
             { :indexed => true,
               :choices => plans
-            } 
+            }
           )
         else
           plan = plans[0]
@@ -52,8 +52,7 @@ module VMC::Cli::Command
         picked_name = true
       end
 
-      plan = @options[:plan] unless plan
-      plan = 'free' unless plan
+      plan ||= @options[:plan] || "free"
       create_service_banner(service, name, picked_name, plan)
 
       appname = @options[:bind] unless appname
